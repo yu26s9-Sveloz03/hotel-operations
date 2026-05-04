@@ -4,8 +4,8 @@ public class Room {
 
     private int numberOfBeds;
     private double price;
-    private Boolean occupied;
-    private Boolean dirty;
+    private boolean occupied;
+    private boolean dirty;
 
     public Room(int numberOfBeds, double price, Boolean occupied, Boolean dirty) {
         this.numberOfBeds = numberOfBeds;
@@ -37,4 +37,5 @@ public class Room {
             return false;
         }
     }
+    
 }
