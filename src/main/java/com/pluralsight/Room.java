@@ -1,0 +1,40 @@
+package com.pluralsight;
+
+public class Room {
+
+    private int numberOfBeds;
+    private double price;
+    private Boolean occupied;
+    private Boolean dirty;
+
+    public Room(int numberOfBeds, double price, Boolean occupied, Boolean dirty) {
+        this.numberOfBeds = numberOfBeds;
+        this.price = price;
+        this.occupied = occupied;
+        this.dirty = dirty;
+    }
+
+    public int getNumberOfBeds() {
+        return numberOfBeds;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public Boolean isOccupied() {
+        return occupied;
+    }
+
+    public Boolean isDirty() {
+        return dirty;
+    }
+
+    public Boolean isAvailable() {
+        if (!isDirty() && !isOccupied()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
