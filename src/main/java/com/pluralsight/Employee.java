@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class Employee {
 
     private String employeeId;
@@ -7,6 +10,8 @@ public class Employee {
     private String department;
     private double payRate;
     private double hoursWorked;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -52,13 +57,49 @@ public class Employee {
         return hoursWorked;
     }
 
-    public void punchTimeCare(int startTime, int endTime) {
-        if ( endTime > startTime) {
-            int shift = endTime - startTime;
+    public void punchIn() {
+        LocalTime startTime = LocalTime.now();
+        this.startTime = startTime;
+    }
+
+    public void punchOut() {
+        LocalTime endTime = LocalTime.now();
+        this.endTime = endTime;
+        int startHour = startTime.getHour();
+        int endHour = endTime.getHour();
+        if ( endTime.isAfter(startTime)) {
+            int shift = endHour - startHour;
             hoursWorked += shift;
         } else {
-            int shift = (24 - startTime) + (endTime);
+            int shift = (24 - startHour) + (endHour);
             hoursWorked += shift;
         }
     }
+
+    public void punchIn(int time) {
+        this.startTime = LocalTime.of(time,0);
+    }
+
+    public void punchOut(int time) {
+        this.endTime = LocalTime.of(time,0);
+        if ( endTime.isAfter(startTime)) {
+            int startHour = startTime.getHour();
+            int shift = time - startHour;
+            hoursWorked += shift;
+        } else {
+            int startHour = startTime.getHour();
+            int shift = (24 - startHour) + (time);
+            hoursWorked += shift;
+        }
+    }
+
+//    public void punchTimeCard(int startTime, int endTime) {
+//        if ( endTime > startTime) {
+//            int shift = endTime - startTime;
+//            hoursWorked += shift;
+//        } else {
+//            int shift = (24 - startTime) + (endTime);
+//            hoursWorked += shift;
+//        }
+//    }
 }
