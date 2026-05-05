@@ -21,10 +21,10 @@ public class Employee {
     }
 
     public double getRegularHours() {
-        if (hoursWorked > 40) {
+        if (getHoursWorked() > 40) {
             return 40;
         } else {
-            return hoursWorked;
+            return getHoursWorked();
         }
     }
 
@@ -50,5 +50,15 @@ public class Employee {
 
     public double getHoursWorked() {
         return hoursWorked;
+    }
+
+    public void punchTimeCare(int startTime, int endTime) {
+        if ( endTime > startTime) {
+            int shift = endTime - startTime;
+            hoursWorked += shift;
+        } else {
+            int shift = (24 - startTime) + (endTime);
+            hoursWorked += shift;
+        }
     }
 }

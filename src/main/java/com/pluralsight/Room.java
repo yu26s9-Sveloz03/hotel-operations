@@ -37,5 +37,18 @@ public class Room {
             return false;
         }
     }
-    
+
+    public void checkIn() {
+        this.occupied = true;
+        this.dirty = true;
+    }
+
+    public void checkOut() {
+        this.occupied = false;
+    }
+
+    public void cleanroom() {
+        this.dirty = false;
+    }
+
 }
