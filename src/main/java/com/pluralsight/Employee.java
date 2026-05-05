@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -10,8 +12,8 @@ public class Employee {
     private String department;
     private double payRate;
     private double hoursWorked;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -58,39 +60,31 @@ public class Employee {
     }
 
     public void punchIn() {
-        LocalTime startTime = LocalTime.now();
+        LocalDateTime startTime = LocalDateTime.now();
         this.startTime = startTime;
     }
 
-    public void punchOut() {
-        LocalTime endTime = LocalTime.now();
-        this.endTime = endTime;
-        int startHour = startTime.getHour();
-        int endHour = endTime.getHour();
-        if ( endTime.isAfter(startTime)) {
-            int shift = endHour - startHour;
-            hoursWorked += shift;
-        } else {
-            int shift = (24 - startHour) + (endHour);
-            hoursWorked += shift;
-        }
+    public void punchIn(int time) {
+        LocalDate date = LocalDate.now();
+        LocalTime manualTime = LocalTime.of(time,0);
+        this.startTime = LocalDateTime.of(date,manualTime);
     }
 
-    public void punchIn(int time) {
-        this.startTime = LocalTime.of(time,0);
+    public void punchOut() {
+        LocalDateTime endTime = LocalDateTime.now();
+        this.endTime = endTime;
+        Duration difference = Duration.between(startTime,this.endTime);
+        double shift = difference.toMinutes() / 60.0;
+        hoursWorked += shift;
     }
 
     public void punchOut(int time) {
-        this.endTime = LocalTime.of(time,0);
-        if ( endTime.isAfter(startTime)) {
-            int startHour = startTime.getHour();
-            int shift = time - startHour;
-            hoursWorked += shift;
-        } else {
-            int startHour = startTime.getHour();
-            int shift = (24 - startHour) + (time);
-            hoursWorked += shift;
-        }
+        LocalDate date = LocalDate.now();
+        LocalTime manualTime = LocalTime.of(time,0);
+        this.endTime = LocalDateTime.of(date,manualTime);
+        Duration difference = Duration.between(startTime,endTime);
+        double shift = difference.toMinutes()/ 60.0;
+        hoursWorked += shift;
     }
 
 //    public void punchTimeCard(int startTime, int endTime) {
